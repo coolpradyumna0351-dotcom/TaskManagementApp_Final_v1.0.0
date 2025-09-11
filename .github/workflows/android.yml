@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-  pull_request:
 
 jobs:
   build:
@@ -20,21 +19,22 @@ jobs:
           distribution: temurin
           java-version: 17
 
-      # Install Gradle (fixes missing gradle-wrapper.jar)
-      - name: Set up Gradle
-        uses: gradle/actions/setup-gradle@v4
+      - name: Remove broken Gradle wrapper
+        run: rm -rf gradle gradlew gradlew.bat
+
+      - name: Generate fresh Gradle wrapper
+        run: |
+          ./gradlew wrapper --gradle-version 8.6 --distribution-type all
+        shell: bash
 
       - name: Grant execute permission for gradlew
-        run: chmod +x ./gradlew || true
+        run: chmod +x gradlew
 
       - name: Build Debug APK
-        run: ./gradlew assembleDebug --stacktrace
-
-      - name: Show APK path
-        run: ls -R app/build/outputs/apk/ || true
+        run: ./gradlew clean assembleDebug
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: app-debug
-          path: app/build/outputs/apk/debug/*.apk
+          path: app/build/outputs/apk/debug/app-debug.apk
