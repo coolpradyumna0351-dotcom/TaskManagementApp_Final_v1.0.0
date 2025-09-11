@@ -29,19 +29,14 @@ jobs:
       - name: Build Release APK
         run: ./gradlew assembleRelease || echo "Release build skipped"
 
-      - name: Show workspace structure
-        run: |
-          echo "Listing everything in the workspace..."
-          ls -R $GITHUB_WORKSPACE
-
-      - name: Find all APKs
-        run: |
-          echo "Searching for APK files..."
-          find $GITHUB_WORKSPACE -name "*.apk"
-
-      - name: Upload APK artifacts
+      - name: Upload Debug APK
         uses: actions/upload-artifact@v4
         with:
-          name: android-apks
-          path: |
-            */.apk
+          name: debug-apk
+          path: app/build/outputs/apk/debug/app-debug.apk
+
+      - name: Upload Release APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-apk
+          path: app/build/outputs/apk/release/app-release.apk
