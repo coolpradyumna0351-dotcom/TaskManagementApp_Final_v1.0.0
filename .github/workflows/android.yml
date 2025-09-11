@@ -4,13 +4,15 @@ on:
   push:
     branches:
       - main
+  pull_request:
 
 jobs:
   build:
+
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Set up JDK 17
@@ -18,21 +20,16 @@ jobs:
         with:
           distribution: temurin
           java-version: 17
+          cache: gradle
 
-      - name: Install Gradle CLI
-        uses: gradle/actions/setup-gradle@v4
-
-      - name: Generate fresh Gradle wrapper
-        run: gradle wrapper --gradle-version 8.2.1 --distribution-type all
-
-      - name: Grant execute permission for gradlew
-        run: chmod +x gradlew
+      - name: Grant execute permission for Gradle wrapper
+        run: chmod +x ./gradlew
 
       - name: Build Debug APK
-        run: ./gradlew clean assembleDebug
+        run: ./gradlew assembleDebug
 
-      - name: Upload APK
+      - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
-          name: app-debug
+          name: TaskManagementApp-APK
           path: app/build/outputs/apk/debug/app-debug.apk
