@@ -10,7 +10,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    steps:
+    steps:   # ✅ FIXED indentation
       - name: Checkout repository
         uses: actions/checkout@v4
 
@@ -29,13 +29,10 @@ jobs:
       - name: Build Release APK
         run: ./gradlew assembleRelease || echo "Release build skipped"
 
-      - name: Find all APKs
-        run: find $GITHUB_WORKSPACE -type f -name "*.apk"
-
       - name: Upload APK artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: APKs       
-      path: |
-        **/build/outputs/apk/debug/*.apk
-        **/build/outputs/apk/release/*.apk
+          name: APKs
+          path: |
+            */build/outputs/apk/debug/.apk
+            */build/outputs/apk/release/.apk
