@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <!-- Watermark: PK inside a light circle (placeholder text) -->
+    <TextView
+        android:id="@+id/watermark"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:text="PK"
+        android:textStyle="italic"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:alpha="0.12"
+        android:background="@android:drawable/btn_default"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"/>
+
+    <TextView
+        android:id="@+id/hello"
+        android:layout_below="@id/watermark"
+        android:layout_marginTop="24dp"
+        android:layout_centerHorizontal="true"
+        android:text="Task Management - Placeholder App"
+        android:textSize="18sp"/>
+
+    <TextView
+        android:id="@+id/support"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:text="Support: coolpradyumna0351@gmail.com | +919938899901"
+        android:textSize="12sp"/>
+</RelativeLayout>
