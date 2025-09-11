@@ -19,13 +19,12 @@ jobs:
           distribution: temurin
           java-version: 17
 
-      - name: Remove broken Gradle wrapper
-        run: rm -rf gradle gradlew gradlew.bat
+      # Generate a fresh gradle wrapper even if none exists
+      - name: Install Gradle CLI
+        uses: gradle/actions/setup-gradle@v3
 
       - name: Generate fresh Gradle wrapper
-        run: |
-          ./gradlew wrapper --gradle-version 8.6 --distribution-type all
-        shell: bash
+        run: gradle wrapper --gradle-version 8.6 --distribution-type all
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
