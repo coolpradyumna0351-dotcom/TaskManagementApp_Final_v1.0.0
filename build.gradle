@@ -1,6 +1,16 @@
-// Root build.gradle (placeholder)
 buildscript {
-    repositories { mavenCentral() }
-    dependencies { classpath "com.android.tools.build:gradle:7.0.4" }
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:8.1.0'
+    }
 }
-allprojects { repositories { mavenCentral() } }
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
