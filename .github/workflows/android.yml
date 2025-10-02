@@ -1,39 +1,38 @@
 name: Android CI
-
 on:
   push:
     branches:
       - main
   pull_request:
-
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-
+      
       - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
           distribution: temurin
           java-version: 17
-
+      
       - name: Make gradlew executable
         run: chmod +x ./gradlew
-
+      
       - name: Build Debug APK
-        run: ./gradlew assembleDebug
-
-      # Debug step: find all APKs in the project
+        run: ./gradlew assembleDebug --stacktrace
+      
       - name: Show all APK files
         run: |
           echo "Searching for APK files..."
-          find . -type f -name "*.apk" || echo "No APK found"
-
+          find . -type f -name "*.apk" -ls || echo "No APK found"
+          echo "Listing build outputs directory:"
+          ls -R app/build/outputs/ || echo "Build outputs directory not found"
+      
       - name: Upload APKs
         uses: actions/upload-artifact@v4
         with:
           name: APK-Files
           path: '**/*.apk'
+          if-no-files-found: warn
